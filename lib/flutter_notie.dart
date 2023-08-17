@@ -18,10 +18,13 @@ class FlutterNotie extends StatelessWidget {
       width: MediaQuery.of(context).size.width,
       padding: const EdgeInsets.symmetric(vertical: 12.0),
       color: backgroundColor,
-      child: Text(
-        message,
-        style: const TextStyle(color: Colors.white),
-        textAlign: TextAlign.center,
+      child: DefaultTextStyle(
+        style: const TextStyle(color: Colors.white, fontSize: 16.0),
+        overflow: TextOverflow.ellipsis,
+        child: Text(
+          message,
+          textAlign: TextAlign.center,
+        ),
       ),
     );
   }
@@ -78,37 +81,39 @@ class FlutterNotie extends StatelessWidget {
 
   static void success(BuildContext context,
       {required String message,
-      Duration duration = const Duration(seconds: 2)}) {
+      Duration duration = const Duration(milliseconds: 800)}) {
     _show(
         context,
-        FlutterNotie._(message: message, backgroundColor: Colors.green),
+        FlutterNotie._(
+            message: message, backgroundColor: Colors.green.shade700),
         duration);
   }
 
   static void info(BuildContext context,
       {required String message,
-      Duration duration = const Duration(seconds: 2)}) {
+      Duration duration = const Duration(milliseconds: 800)}) {
     _show(
         context,
-        FlutterNotie._(message: message, backgroundColor: Colors.blue),
+        FlutterNotie._(message: message, backgroundColor: Colors.blue.shade700),
         duration);
   }
 
   static void warning(BuildContext context,
       {required String message,
-      Duration duration = const Duration(seconds: 2)}) {
+      Duration duration = const Duration(milliseconds: 800)}) {
     _show(
         context,
-        FlutterNotie._(message: message, backgroundColor: Colors.yellow),
+        FlutterNotie._(
+            message: message, backgroundColor: Colors.yellow.shade700),
         duration);
   }
 
   static void error(BuildContext context,
       {required String message,
-      Duration duration = const Duration(seconds: 2)}) {
+      Duration duration = const Duration(milliseconds: 800)}) {
     _show(
         context,
-        FlutterNotie._(message: message, backgroundColor: Colors.red),
+        FlutterNotie._(message: message, backgroundColor: Colors.red.shade700),
         duration);
   }
 
