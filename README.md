@@ -28,6 +28,7 @@ To use ```flutter_notie```, simply call one of its static methods in your code:
 
 ```dart
 import 'package:flutter_notie/flutter_notie.dart';
+
 FlutterNotie.success(context, message: 'This was successful!');
 FlutterNotie.info(context, message: 'Some information for you.');
 FlutterNotie.warning(context, message: 'Be careful!');
