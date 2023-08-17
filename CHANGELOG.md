@@ -17,3 +17,9 @@ All notable changes to "flutter_notie" will be documented in this file.
 - Fix some bugs concerning the toast's text
 - Update all `flutter_notie` toats colors
 - Update the default toast's duration to 800 milliseconds
+
+## [0.0.3] - 2023-08-18
+
+### Added
+
+- Fix `flutter_notie` duration bug
