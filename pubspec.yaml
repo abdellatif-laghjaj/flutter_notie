@@ -1,7 +1,7 @@
 name: flutter_notie
 description: A clean and simple toast notification for flutter
 version: 0.0.1
-homepage:
+homepage: https://github.com/abdellatif-laghjaj/flutter_notie
 
 environment:
   sdk: '>=3.0.6 <4.0.0'
