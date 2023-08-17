@@ -27,11 +27,24 @@ flutter pub get
 To use ```flutter_notie```, simply call one of its static methods in your code:
 
 ```dart
+// Import the package.
 import 'package:flutter_notie/flutter_notie.dart';
 
+// Show a success toast notification.
 FlutterNotie.success(context, message: 'This was successful!');
+
+// Show an info toast notification.
 FlutterNotie.info(context, message: 'Some information for you.');
+
+// Show a warning toast notification.
 FlutterNotie.warning(context, message: 'Be careful!');
+
+// Show an error toast notification.
 FlutterNotie.error(context, message: 'Oops, something went wrong.');
+
+// Show a default toast notification.
 FlutterNotie.defaultNotie(context, message: 'Just a regular notification.');
+
+// Show a taost notification with a custom duration.
+FlutterNotie.success(context, message: 'This was successful!', duration: Duration(seconds: 5));
 ```
