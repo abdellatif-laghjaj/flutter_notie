@@ -14,7 +14,7 @@ To add `flutter_notie` to your package's `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  flutter_notie: ^0.0.1
+  flutter_notie: ^0.0.4
 
 ```
 

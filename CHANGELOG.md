@@ -12,7 +12,7 @@ All notable changes to "flutter_notie" will be documented in this file.
 
 ## [0.0.2] - 2023-08-18
 
-### Added
+### Added & Changed
 
 - Fix some bugs concerning the toast's text
 - Update all `flutter_notie` toats colors
@@ -20,6 +20,12 @@ All notable changes to "flutter_notie" will be documented in this file.
 
 ## [0.0.3] - 2023-08-18
 
-### Added
+### Fixed
 
 - Fix `flutter_notie` duration bug
+
+## [0.0.4] - 2023-08-18
+
+### Fixed
+
+- Fix `flutter_notie` height bug
