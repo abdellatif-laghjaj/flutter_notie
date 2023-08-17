@@ -48,3 +48,13 @@ FlutterNotie.defaultNotie(context, message: 'Just a regular notification.');
 // Show a taost notification with a custom duration.
 FlutterNotie.success(context, message: 'This was successful!', duration: Duration(seconds: 5));
 ```
+
+## Screenshots
+![image](https://github.com/abdellatif-laghjaj/flutter_notie/assets/79521157/812f9750-4181-4ad5-9c7f-0501dc7a4d24)
+![image](https://github.com/abdellatif-laghjaj/flutter_notie/assets/79521157/2305c3ee-4b69-4d95-ba81-0423402bca71)
+![image](https://github.com/abdellatif-laghjaj/flutter_notie/assets/79521157/5f6ef0ff-ae18-4616-8a43-d90079c1768a)
+![image](https://github.com/abdellatif-laghjaj/flutter_notie/assets/79521157/e23e0204-dd6d-49b3-bafa-014e924bc674)
+![image](https://github.com/abdellatif-laghjaj/flutter_notie/assets/79521157/dead9424-e383-4c56-8f71-a87381eabdb2)
+
+
+
