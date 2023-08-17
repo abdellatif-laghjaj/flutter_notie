@@ -2,6 +2,31 @@ library flutter_notie;
 
 import 'package:flutter/material.dart';
 
+enum ToastType {
+  success,
+  info,
+  warning,
+  error,
+  defaultNotie,
+}
+
+extension ToastTypeColor on ToastType {
+  Color get color {
+    switch (this) {
+      case ToastType.success:
+        return Colors.green.shade700;
+      case ToastType.info:
+        return Colors.blue.shade700;
+      case ToastType.warning:
+        return Colors.yellow.shade700;
+      case ToastType.error:
+        return Colors.red.shade700;
+      case ToastType.defaultNotie:
+        return Colors.black54;
+    }
+  }
+}
+
 class FlutterNotie extends StatelessWidget {
   final String message;
   final Color backgroundColor;
@@ -30,7 +55,7 @@ class FlutterNotie extends StatelessWidget {
   }
 
   static void _show(
-      BuildContext context, FlutterNotie notie, Duration duration) {
+      BuildContext context, String message, ToastType type, Duration duration) {
     final overlay = Overlay.of(context);
 
     if (_isVisible) return;
@@ -57,7 +82,8 @@ class FlutterNotie extends StatelessWidget {
           position: positionAnimation,
           child: FadeTransition(
             opacity: opacityAnimation,
-            child: notie,
+            child:
+                FlutterNotie._(message: message, backgroundColor: type.color),
           ),
         ),
       ),
@@ -81,48 +107,31 @@ class FlutterNotie extends StatelessWidget {
 
   static void success(BuildContext context,
       {required String message,
-      Duration duration = const Duration(milliseconds: 800)}) {
-    _show(
-        context,
-        FlutterNotie._(
-            message: message, backgroundColor: Colors.green.shade700),
-        duration);
+      Duration duration = const Duration(milliseconds: 1200)}) {
+    _show(context, message, ToastType.success, duration);
   }
 
   static void info(BuildContext context,
       {required String message,
-      Duration duration = const Duration(milliseconds: 800)}) {
-    _show(
-        context,
-        FlutterNotie._(message: message, backgroundColor: Colors.blue.shade700),
-        duration);
+      Duration duration = const Duration(milliseconds: 1200)}) {
+    _show(context, message, ToastType.info, duration);
   }
 
   static void warning(BuildContext context,
       {required String message,
-      Duration duration = const Duration(milliseconds: 800)}) {
-    _show(
-        context,
-        FlutterNotie._(
-            message: message, backgroundColor: Colors.yellow.shade700),
-        duration);
+      Duration duration = const Duration(milliseconds: 1200)}) {
+    _show(context, message, ToastType.warning, duration);
   }
 
   static void error(BuildContext context,
       {required String message,
-      Duration duration = const Duration(milliseconds: 800)}) {
-    _show(
-        context,
-        FlutterNotie._(message: message, backgroundColor: Colors.red.shade700),
-        duration);
+      Duration duration = const Duration(milliseconds: 1200)}) {
+    _show(context, message, ToastType.error, duration);
   }
 
   static void defaultNotie(BuildContext context,
       {required String message,
-      Duration duration = const Duration(seconds: 2)}) {
-    _show(
-        context,
-        FlutterNotie._(message: message, backgroundColor: Colors.black54),
-        duration);
+      Duration duration = const Duration(milliseconds: 1200)}) {
+    _show(context, message, ToastType.defaultNotie, duration);
   }
 }
