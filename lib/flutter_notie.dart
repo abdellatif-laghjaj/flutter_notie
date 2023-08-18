@@ -54,31 +54,36 @@ class FlutterNotie extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BackdropFilter(
-      filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-      child: Container(
-        width: MediaQuery.of(context).size.width,
-        padding: const EdgeInsets.symmetric(vertical: 20.0),
-        color: backgroundColor.withOpacity(0.8),
-        // Making it slightly transparent
-        child: DefaultTextStyle(
-          style: const TextStyle(color: Colors.white, fontSize: 16.0),
-          overflow: TextOverflow.ellipsis,
-          child: (backgroundColor == ToastType.loading.color)
-              ? Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                    ),
-                    const SizedBox(width: 15),
-                    Text(message, textAlign: TextAlign.center),
-                  ],
-                )
-              : Text(message, textAlign: TextAlign.center),
-        ),
+    Widget content = Container(
+      width: MediaQuery.of(context).size.width,
+      padding: const EdgeInsets.symmetric(vertical: 20.0),
+      color: backgroundColor.withOpacity(0.8),
+      child: DefaultTextStyle(
+        style: const TextStyle(color: Colors.white, fontSize: 16.0),
+        overflow: TextOverflow.ellipsis,
+        child: (backgroundColor == ToastType.loading.color)
+            ? Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+            ),
+            const SizedBox(width: 15),
+            Text(message, textAlign: TextAlign.center),
+          ],
+        )
+            : Text(message, textAlign: TextAlign.center),
       ),
     );
+
+    if (backgroundColor == ToastType.loading.color) {
+      content = BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+        child: content,
+      );
+    }
+
+    return content;
   }
 
   /// Displays the toast notification on the screen.
@@ -130,7 +135,7 @@ class FlutterNotie extends StatelessWidget {
     });
 
     if (type == ToastType.loading && futureToWaitFor != null) {
-      futureToWaitFor.then((_) {
+      futureToWaitFor.whenComplete(() {
         controller.reverse().then((value) {
           _overlayEntry?.remove();
           _isVisible = false;
