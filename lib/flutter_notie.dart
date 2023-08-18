@@ -3,6 +3,7 @@
 library flutter_notie;
 
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 /// An enumeration representing different toast notification types.
 enum ToastType {
@@ -11,6 +12,7 @@ enum ToastType {
   warning,
   error,
   defaultNotie,
+  loading,
 }
 
 /// An extension on [ToastType] to easily get the associated color.
@@ -28,6 +30,8 @@ extension ToastTypeColor on ToastType {
         return Colors.red.shade700;
       case ToastType.defaultNotie:
         return Colors.black54;
+      case ToastType.loading:
+        return Colors.black54;
     }
   }
 }
@@ -40,11 +44,15 @@ class FlutterNotie extends StatelessWidget {
   /// The background color of the toast.
   final Color backgroundColor;
 
+  /// The Lottie asset for loading
+  final String? lottieAsset;
+
   /// Creates an instance of [FlutterNotie].
   const FlutterNotie._({
     Key? key,
     required this.message,
     required this.backgroundColor,
+    this.lottieAsset,
   }) : super(key: key);
 
   @override
@@ -52,16 +60,39 @@ class FlutterNotie extends StatelessWidget {
     return Container(
       width: MediaQuery.of(context).size.width,
       padding: const EdgeInsets.symmetric(vertical: 20.0),
-      color: backgroundColor,
+      color: Colors.black54.withOpacity(0.7), // Adding blur
       child: DefaultTextStyle(
         style: const TextStyle(color: Colors.white, fontSize: 16.0),
         overflow: TextOverflow.ellipsis,
-        child: Text(
-          message,
-          textAlign: TextAlign.center,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            if (lottieAsset != null) Lottie.asset(lottieAsset!),
+            Text(
+              message,
+              textAlign: TextAlign.center,
+            ),
+          ],
         ),
       ),
     );
+  }
+
+  /// Displays a loading toast notification.
+  static Future<void> loading(BuildContext context,
+      {required String message,
+      required Future<void> futureTask,
+      String lottieAsset = 'url_to_your_lottie_animation.json'}) async {
+    _show(context, message, ToastType.loading,
+        Duration(days: 365)); // Use a long duration for loading
+    await futureTask; // Wait for the task to finish
+    _hide(); // Hide the toast once done
+  }
+
+  /// Hides the toast notification.
+  static void _hide() {
+    _overlayEntry?.remove();
+    _isVisible = false;
   }
 
   /// Displays the toast notification on the screen.

@@ -36,3 +36,10 @@ All notable changes to "flutter_notie" will be documented in this file.
 
 - Add documentation to `flutter_notie` package
 - Add example to `flutter_notie` package
+
+## [0.0.6] - 2023-08-18
+
+### Added
+
+- Add a new toast type: `FlutterNotie.loading` to display a loading toast notification with lottie
+  animations
