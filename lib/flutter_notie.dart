@@ -5,7 +5,6 @@ library flutter_notie;
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
 
 /// An enumeration representing different toast notification types.
 enum ToastType {
