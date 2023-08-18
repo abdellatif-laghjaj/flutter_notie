@@ -33,14 +33,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,11 +52,11 @@ class _MyHomePageState extends State<MyHomePage> {
                   FlutterNotie.success(context,
                       message: 'This is a success message');
                 },
-                child: const Text('Succes'),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.green,
                   foregroundColor: Colors.white,
                 ),
+                child: const Text('Succes'),
               ),
             ),
             const SizedBox(height: 10),
@@ -75,11 +67,11 @@ class _MyHomePageState extends State<MyHomePage> {
                   FlutterNotie.error(context,
                       message: 'This is an error message');
                 },
-                child: const Text('Error'),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.red,
                   foregroundColor: Colors.white,
                 ),
+                child: const Text('Error'),
               ),
             ),
             const SizedBox(height: 10),
@@ -90,11 +82,11 @@ class _MyHomePageState extends State<MyHomePage> {
                   FlutterNotie.info(context,
                       message: 'This is an info message');
                 },
-                child: const Text('Info'),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue,
                   foregroundColor: Colors.white,
                 ),
+                child: const Text('Info'),
               ),
             ),
             const SizedBox(height: 10),
@@ -105,11 +97,11 @@ class _MyHomePageState extends State<MyHomePage> {
                   FlutterNotie.warning(context,
                       message: 'This is a warning message');
                 },
-                child: const Text('Warning'),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.orange,
                   foregroundColor: Colors.white,
                 ),
+                child: const Text('Warning'),
               ),
             ),
             const SizedBox(height: 10),
@@ -120,11 +112,11 @@ class _MyHomePageState extends State<MyHomePage> {
                   FlutterNotie.defaultNotie(context,
                       message: 'This is a default message');
                 },
-                child: const Text('Default'),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.black54,
                   foregroundColor: Colors.white,
                 ),
+                child: const Text('Default'),
               ),
             ),
           ],
