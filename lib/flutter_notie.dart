@@ -2,6 +2,8 @@
 /// various predefined styles.
 library flutter_notie;
 
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
@@ -31,7 +33,7 @@ extension ToastTypeColor on ToastType {
       case ToastType.defaultNotie:
         return Colors.black54;
       case ToastType.loading:
-        return Colors.black54;
+        return Colors.grey.shade800;
     }
   }
 }
@@ -44,60 +46,45 @@ class FlutterNotie extends StatelessWidget {
   /// The background color of the toast.
   final Color backgroundColor;
 
-  /// The Lottie asset for loading
-  final String? lottieAsset;
-
   /// Creates an instance of [FlutterNotie].
   const FlutterNotie._({
     Key? key,
     required this.message,
     required this.backgroundColor,
-    this.lottieAsset,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      padding: const EdgeInsets.symmetric(vertical: 20.0),
-      color: Colors.black54.withOpacity(0.7), // Adding blur
-      child: DefaultTextStyle(
-        style: const TextStyle(color: Colors.white, fontSize: 16.0),
-        overflow: TextOverflow.ellipsis,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            if (lottieAsset != null) Lottie.asset(lottieAsset!),
-            Text(
-              message,
-              textAlign: TextAlign.center,
-            ),
-          ],
+    return BackdropFilter(
+      filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        padding: const EdgeInsets.symmetric(vertical: 20.0),
+        color: backgroundColor.withOpacity(0.8),
+        // Making it slightly transparent
+        child: DefaultTextStyle(
+          style: const TextStyle(color: Colors.white, fontSize: 16.0),
+          overflow: TextOverflow.ellipsis,
+          child: (backgroundColor == ToastType.loading.color)
+              ? Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                    ),
+                    const SizedBox(width: 15),
+                    Text(message, textAlign: TextAlign.center),
+                  ],
+                )
+              : Text(message, textAlign: TextAlign.center),
         ),
       ),
     );
   }
 
-  /// Displays a loading toast notification.
-  static Future<void> loading(BuildContext context,
-      {required String message,
-      required Future<void> futureTask,
-      String lottieAsset = 'url_to_your_lottie_animation.json'}) async {
-    _show(context, message, ToastType.loading,
-        Duration(days: 365)); // Use a long duration for loading
-    await futureTask; // Wait for the task to finish
-    _hide(); // Hide the toast once done
-  }
-
-  /// Hides the toast notification.
-  static void _hide() {
-    _overlayEntry?.remove();
-    _isVisible = false;
-  }
-
   /// Displays the toast notification on the screen.
-  static void _show(
-      BuildContext context, String message, ToastType type, Duration duration) {
+  static void _show(BuildContext context, String message, ToastType type,
+      Duration duration, Future? futureToWaitFor) {
     final overlay = Overlay.of(context);
 
     if (_isVisible) return;
@@ -142,6 +129,22 @@ class FlutterNotie extends StatelessWidget {
         _isVisible = false;
       });
     });
+
+    if (type == ToastType.loading && futureToWaitFor != null) {
+      futureToWaitFor.then((_) {
+        controller.reverse().then((value) {
+          _overlayEntry?.remove();
+          _isVisible = false;
+        });
+      });
+    } else {
+      Future.delayed(duration, () {
+        controller.reverse().then((value) {
+          _overlayEntry?.remove();
+          _isVisible = false;
+        });
+      });
+    }
   }
 
   static OverlayEntry? _overlayEntry;
@@ -151,34 +154,41 @@ class FlutterNotie extends StatelessWidget {
   static void success(BuildContext context,
       {required String message,
       Duration duration = const Duration(milliseconds: 1200)}) {
-    _show(context, message, ToastType.success, duration);
+    _show(context, message, ToastType.success, duration, null);
   }
 
   /// Displays an informational toast notification.
   static void info(BuildContext context,
       {required String message,
       Duration duration = const Duration(milliseconds: 1200)}) {
-    _show(context, message, ToastType.info, duration);
+    _show(context, message, ToastType.info, duration, null);
   }
 
   /// Displays a warning toast notification.
   static void warning(BuildContext context,
       {required String message,
       Duration duration = const Duration(milliseconds: 1200)}) {
-    _show(context, message, ToastType.warning, duration);
+    _show(context, message, ToastType.warning, duration, null);
   }
 
   /// Displays an error toast notification.
   static void error(BuildContext context,
       {required String message,
       Duration duration = const Duration(milliseconds: 1200)}) {
-    _show(context, message, ToastType.error, duration);
+    _show(context, message, ToastType.error, duration, null);
   }
 
   /// Displays a default styled toast notification.
   static void defaultNotie(BuildContext context,
       {required String message,
       Duration duration = const Duration(milliseconds: 1200)}) {
-    _show(context, message, ToastType.defaultNotie, duration);
+    _show(context, message, ToastType.defaultNotie, duration, null);
+  }
+
+  /// Displays a loading toast notification that waits for a [Future] to complete.
+  static void loading(BuildContext context,
+      {required String message, required Future futureToWaitFor}) {
+    _show(context, message, ToastType.loading, const Duration(days: 365),
+        futureToWaitFor); // We give it a very long duration which is effectively cut off when the future completes
   }
 }
