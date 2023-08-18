@@ -1,7 +1,10 @@
+/// Provides sleek toast notifications for Flutter apps with
+/// various predefined styles.
 library flutter_notie;
 
 import 'package:flutter/material.dart';
 
+/// An enumeration representing different toast notification types.
 enum ToastType {
   success,
   info,
@@ -10,7 +13,9 @@ enum ToastType {
   defaultNotie,
 }
 
+/// An extension on [ToastType] to easily get the associated color.
 extension ToastTypeColor on ToastType {
+  /// Returns the color associated with each toast type.
   Color get color {
     switch (this) {
       case ToastType.success:
@@ -27,10 +32,15 @@ extension ToastTypeColor on ToastType {
   }
 }
 
+/// A widget that displays a toast notification on the screen.
 class FlutterNotie extends StatelessWidget {
+  /// The message to be displayed on the toast.
   final String message;
+
+  /// The background color of the toast.
   final Color backgroundColor;
 
+  /// Creates an instance of [FlutterNotie].
   const FlutterNotie._({
     Key? key,
     required this.message,
@@ -54,6 +64,7 @@ class FlutterNotie extends StatelessWidget {
     );
   }
 
+  /// Displays the toast notification on the screen.
   static void _show(
       BuildContext context, String message, ToastType type, Duration duration) {
     final overlay = Overlay.of(context);
@@ -105,30 +116,35 @@ class FlutterNotie extends StatelessWidget {
   static OverlayEntry? _overlayEntry;
   static bool _isVisible = false;
 
+  /// Displays a success toast notification.
   static void success(BuildContext context,
       {required String message,
       Duration duration = const Duration(milliseconds: 1200)}) {
     _show(context, message, ToastType.success, duration);
   }
 
+  /// Displays an informational toast notification.
   static void info(BuildContext context,
       {required String message,
       Duration duration = const Duration(milliseconds: 1200)}) {
     _show(context, message, ToastType.info, duration);
   }
 
+  /// Displays a warning toast notification.
   static void warning(BuildContext context,
       {required String message,
       Duration duration = const Duration(milliseconds: 1200)}) {
     _show(context, message, ToastType.warning, duration);
   }
 
+  /// Displays an error toast notification.
   static void error(BuildContext context,
       {required String message,
       Duration duration = const Duration(milliseconds: 1200)}) {
     _show(context, message, ToastType.error, duration);
   }
 
+  /// Displays a default styled toast notification.
   static void defaultNotie(BuildContext context,
       {required String message,
       Duration duration = const Duration(milliseconds: 1200)}) {
