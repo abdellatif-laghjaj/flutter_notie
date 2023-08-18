@@ -1,6 +1,6 @@
 name: flutter_notie
 description: FlutterNotie provides sleek toast notifications for Flutter apps, supporting various predefined styles like success, info, and error. Ideal for user feedback without clutter.
-version: 0.0.4
+version: 0.0.5
 homepage: https://github.com/abdellatif-laghjaj/flutter_notie
 
 environment:

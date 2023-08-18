@@ -29,3 +29,10 @@ All notable changes to "flutter_notie" will be documented in this file.
 ### Fixed
 
 - Fix `flutter_notie` height bug
+
+## [0.0.5] - 2023-08-18
+
+### Added
+
+- Add documentation to `flutter_notie` package
+- Add example to `flutter_notie` package
